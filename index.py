@@ -33,27 +33,6 @@ connection_object_to_testdb.commit
 
 connection_object_to_testdb.close()"""
 
-connection_to_votesdb = sqlite3.connect("votes.db")
-connection_to_votesdb.execute("""CREATE TABLE IF NOT EXISTS votes(
-               Id integer PRIMARY KEY AUTOINCREMENT,
-               party_name TEXT UNIQUE,
-               votes INTEGER)""")
-connection_to_votesdb.commit()
-
-
-def add_party(connection_to_votesdb, party_name):
-    try:
-        connection_to_votesdb.execute(
-            """INSERT INTO votes(
-            party_name, votes) VALUES (?,?)""",
-            (party_name, 0),
-        )
-        connection_to_votesdb.commit()
-        return True, None
-
-    except Exception as e:
-        return False, e
-
 
 def cast_vote(connection_to_votesdb, party_name):
     try:
