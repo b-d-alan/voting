@@ -6,7 +6,7 @@ import sqlite3
 import csv
 
 
-def databse_setup(database_name):
+def databse_setup(useless_parameter=None,database_name):
     connection_to_db = sqlite3.connect(database_name)
     connection_to_db.execute("""CREATE TABLE IF NOT EXISTS votes(
                     Id integer PRIMARY KEY AUTOINCREMENT,
@@ -19,6 +19,8 @@ def databse_setup(database_name):
                     )""")
     connection_to_db.commit()
     print("Creation successful")
+    return connection_to_db
+
 
 
 def add_party(connection_to_db, party_name):
@@ -61,3 +63,20 @@ def import_data(connection_to_db, csv_file_name):
         print("import successful")
     except Exception as e:
         print("error", e)
+
+
+command_function_hashing = {
+    "add_party": add_party,
+    "import_data": import_data,
+    "setup_database": databse_setup,
+}
+while True:
+    command = input("enter command")
+    command_keyword = command.split()[0]
+    command_argument = " ".join(command.split()[1:])
+    if command_keyword in command_function_hashing:
+        command_function_hashing[command_keyword](databse_setup(),command_argument)
+    elif command.strip().lower()=="exit":
+        break
+    else:
+        print("invalid command")
