@@ -85,10 +85,21 @@ def connection_creater():
         print("error", e)
 
 
+def list_parties(useless_var=None):
+    try:
+        cursor = connection_to_db.execute("""SELECT * FROM votes""")
+        parties = cursor.fetchall()
+        for party in parties:
+            print(party)
+    except Exception as e:
+        print("error", e)
+
+
 command_function_hashing = {
     "add_party": add_party,
     "import_data": import_data,
     "setup_database": databse_setup,
+    "list_parties": list_parties,
 }
 while True:
     command = input("enter command: ")
