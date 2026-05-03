@@ -7,7 +7,7 @@ import csv
 import os
 
 
-def databse_setup():
+def databse_setup(useless_var=None):
     if "metadata.txt" not in os.listdir():
         database_name = input("enter name for databse creation: ")
         connection_to_db = sqlite3.connect(f"{database_name}.db")
@@ -23,9 +23,9 @@ def databse_setup():
         connection_to_db.commit()
         print("Creation successful")
         with open("metadata.txt", "w") as metadata_file_object:
-            metadata_file_object.write("database name: ", f"{database_name}.db")
+            metadata_file_object.write(f"database name: {database_name}.db")
     else:
-        with ("metadata.txt", "r") as metadata_file_object:
+        with open("metadata.txt", "r") as metadata_file_object:
             metadata = metadata_file_object.read()
         database_name = metadata.split(":")[1].strip()
         if database_name in os.listdir():
@@ -34,7 +34,6 @@ def databse_setup():
 
 def add_party(party_name):
     try:
-        connection_to_db = sqlite3.connect(database_name)
         connection_to_db.execute(
             """INSERT INTO votes(
             party_name, votes) VALUES (?,?)""",
@@ -75,6 +74,17 @@ def import_data(csv_file_name):
         print("error", e)
 
 
+def connection_creater():
+    try:
+        with open("metadata.txt", "r") as metadata_file_object:
+            metadata = metadata_file_object.read()
+            database_file_name = metadata.split(":")[1].strip()
+            connection_to_db = sqlite3.connect(database_file_name)
+            return connection_to_db
+    except Exception as e:
+        print("error", e)
+
+
 command_function_hashing = {
     "add_party": add_party,
     "import_data": import_data,
@@ -85,7 +95,8 @@ while True:
     command_keyword = command.split()[0]
     command_argument = " ".join(command.split()[1:])
     if command_keyword in command_function_hashing:
-        command_function_hashing[command_keyword](command_argument, databse_setup())
+        connection_to_db = connection_creater()
+        command_function_hashing[command_keyword](command_argument)
     elif command.strip().lower() == "exit":
         break
     else:
