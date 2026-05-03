@@ -4,27 +4,37 @@ setup_wizard to create database, tables and import voters list
 
 import sqlite3
 import csv
+import os
 
 
-def databse_setup(useless_parameter=None,database_name):
-    connection_to_db = sqlite3.connect(database_name)
-    connection_to_db.execute("""CREATE TABLE IF NOT EXISTS votes(
-                    Id integer PRIMARY KEY AUTOINCREMENT,
-                    party_name TEXT UNIQUE,
-                    votes INTEGER)
-                    """)
-    connection_to_db.execute("""CREATE TABLE IF NOT EXISTS voters(
-                    admission_no TEXT PRIMARY KEY,
-                    has_voted INTEGER DEFAULT 0
-                    )""")
-    connection_to_db.commit()
-    print("Creation successful")
-    return connection_to_db
+def databse_setup():
+    if "metadata.txt" not in os.listdir():
+        database_name = input("enter name for databse creation: ")
+        connection_to_db = sqlite3.connect(f"{database_name}.db")
+        connection_to_db.execute("""CREATE TABLE IF NOT EXISTS votes(
+                        Id integer PRIMARY KEY AUTOINCREMENT,
+                        party_name TEXT UNIQUE,
+                        votes INTEGER)
+                        """)
+        connection_to_db.execute("""CREATE TABLE IF NOT EXISTS voters(
+                        admission_no TEXT PRIMARY KEY,
+                        has_voted INTEGER DEFAULT 0
+                        )""")
+        connection_to_db.commit()
+        print("Creation successful")
+        with open("metadata.txt", "w") as metadata_file_object:
+            metadata_file_object.write("database name: ", f"{database_name}.db")
+    else:
+        with ("metadata.txt", "r") as metadata_file_object:
+            metadata = metadata_file_object.read()
+        database_name = metadata.split(":")[1].strip()
+        if database_name in os.listdir():
+            print("database already exists")
 
 
-
-def add_party(connection_to_db, party_name):
+def add_party(party_name):
     try:
+        connection_to_db = sqlite3.connect(database_name)
         connection_to_db.execute(
             """INSERT INTO votes(
             party_name, votes) VALUES (?,?)""",
@@ -37,7 +47,7 @@ def add_party(connection_to_db, party_name):
         print("error", e)
 
 
-def import_data(connection_to_db, csv_file_name):
+def import_data(csv_file_name):
     try:
         admission_number_header = input(
             "what is the header name for the admisssion number column"
@@ -71,12 +81,12 @@ command_function_hashing = {
     "setup_database": databse_setup,
 }
 while True:
-    command = input("enter command")
+    command = input("enter command: ")
     command_keyword = command.split()[0]
     command_argument = " ".join(command.split()[1:])
     if command_keyword in command_function_hashing:
-        command_function_hashing[command_keyword](databse_setup(),command_argument)
-    elif command.strip().lower()=="exit":
+        command_function_hashing[command_keyword](command_argument, databse_setup())
+    elif command.strip().lower() == "exit":
         break
     else:
         print("invalid command")
