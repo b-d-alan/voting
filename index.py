@@ -47,3 +47,25 @@ def cast_vote(connection_to_votesdb, party_name):
             return True, None
     except Exception as e:
         return False, e
+
+
+def voter_verification(connection_to_votesdb, voter_ID):
+    try:
+        cursor = connection_to_votesdb.execute(
+            """SELECT * FROM voters WHERE admission_no=?""",
+            (voter_ID,),
+        )
+        voter = cursor.fetchone()
+        if voter is None:
+            raise Exception("voter not found")
+        elif voter[1] == 1:
+            raise Exception("voter has already voted")
+        else:
+            connection_to_votesdb.execute(
+                """UPDATE voters SET has_voted=1 WHERE admission_no=?""",
+                (voter_ID,),
+            )
+            connection_to_votesdb.commit()
+            return True, None
+    except Exception as e:
+        return False, e
