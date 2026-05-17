@@ -122,9 +122,9 @@ command_function_hashing = {
 
 while True:
     command = input("enter command: ")
-    command_keyword = command.split()[0]
     if not command:
         continue
+    command_keyword = command.split()[0]
     if command_keyword in command_function_hashing:
         command_function_hashing[command_keyword]()
     elif command.strip().lower() == "exit":
