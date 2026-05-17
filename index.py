@@ -9,7 +9,6 @@ def cast_vote(connection_to_votesdb, party_name):
             """UPDATE votes SET votes= votes+1 WHERE party_name=?""",
             (party_name,),
         )
-        connection_to_votesdb.commit()
         if cursor.rowcount == 0:
             raise Exception("party not found")
         else:
@@ -34,7 +33,6 @@ def voter_verification(connection_to_votesdb, voter_ID):
                 """UPDATE voters SET has_voted=1 WHERE admission_no=?""",
                 (voter_ID,),
             )
-            connection_to_votesdb.commit()
             return True, None
     except Exception as e:
         return False, e
