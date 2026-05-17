@@ -7,7 +7,7 @@ import csv
 import os
 
 
-def databse_setup(useless_var=None):
+def databse_setup():
     if "metadata.txt" not in os.listdir():
         database_name = input("enter name for databse creation: ")
         connection_to_db = sqlite3.connect(f"{database_name}.db")
@@ -32,7 +32,9 @@ def databse_setup(useless_var=None):
             print("database already exists")
 
 
-def add_party(party_name):
+def add_party():
+    connection_to_db = connection_creater()
+    party_name = input("enter name of the party to be added: ")
     try:
         connection_to_db.execute(
             """INSERT INTO votes(
@@ -46,7 +48,9 @@ def add_party(party_name):
         print("error", e)
 
 
-def import_data(csv_file_name):
+def import_data():
+    connection_to_db = connection_creater()
+    csv_file_name = input("enter the name of the csv file to import data from: ")
     try:
         admission_number_header = input(
             "what is the header name for the admisssion number column"
@@ -85,7 +89,8 @@ def connection_creater():
         print("error", e)
 
 
-def list_parties(useless_var=None):
+def list_parties():
+    connection_to_db = connection_creater()
     try:
         cursor = connection_to_db.execute("""SELECT * FROM votes""")
         parties = cursor.fetchall()
@@ -95,20 +100,34 @@ def list_parties(useless_var=None):
         print("error", e)
 
 
+def _help():
+    print(
+        "add_party: to add a party to the election",
+        "import_data: to import voters data from a csv file",
+        "setup_database: to setup database and tables",
+        "list_parties: to list all parties in the election",
+        "help: to get help on commands",
+        "exit: to exit the program",
+        sep="\n",
+    )
+
+
 command_function_hashing = {
     "add_party": add_party,
     "import_data": import_data,
     "setup_database": databse_setup,
     "list_parties": list_parties,
+    "help": _help,
 }
+
 while True:
     command = input("enter command: ")
     command_keyword = command.split()[0]
-    command_argument = " ".join(command.split()[1:])
+    if not command:
+        continue
     if command_keyword in command_function_hashing:
-        connection_to_db = connection_creater()
-        command_function_hashing[command_keyword](command_argument)
+        command_function_hashing[command_keyword]()
     elif command.strip().lower() == "exit":
         break
     else:
-        print("invalid command")
+        print("invalid command", "type 'help' to get help on commands", sep="\n")
