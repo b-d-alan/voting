@@ -53,7 +53,7 @@ def import_data():
     csv_file_name = input("enter the name of the csv file to import data from: ")
     try:
         admission_number_header = input(
-            "what is the header name for the admisssion number column"
+            "what is the header name for the admisssion number column: "
         )
         admission_no_column_no = None
         with open(f"{csv_file_name}.csv", "r") as csv_file_object:
@@ -100,12 +100,22 @@ def list_parties():
         print("error", e)
 
 
+def list_voters():
+    connection_to_db = connection_creater()
+    cursor = connection_to_db.execute("""SELECT * FROM voters""")
+    voters = cursor.fetchall()
+    for voter in voters:
+        print(voter)
+    connection_to_db.close()
+
+
 def _help():
     print(
         "add_party: to add a party to the election",
         "import_data: to import voters data from a csv file",
         "setup_database: to setup database and tables",
         "list_parties: to list all parties in the election",
+        "list_voters: to list all voters in the election",
         "help: to get help on commands",
         "exit: to exit the program",
         sep="\n",
@@ -117,6 +127,7 @@ command_function_hashing = {
     "import_data": import_data,
     "setup_database": databse_setup,
     "list_parties": list_parties,
+    "list_voters": list_voters,
     "help": _help,
 }
 
