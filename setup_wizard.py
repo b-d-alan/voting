@@ -109,6 +109,41 @@ def list_voters():
     connection_to_db.close()
 
 
+def voter_modification():
+    connection_to_db = connection_creater()
+    admission_no = input("enter the admission number of the voter to be modified: ")
+    try:
+        cursor = connection_to_db.execute(
+            """SELECT * FROM voters WHERE admission_no=?""",
+            (admission_no,),
+        )
+        voter = cursor.fetchone()
+        if voter is None:
+            raise Exception("voter not found")
+        else:
+            has_voted = input("has the voter voted? (yes/no): ").strip().lower()
+            if has_voted == "yes":
+                connection_to_db.execute(
+                    """UPDATE voters SET has_voted=1 WHERE admission_no=?""",
+                    (admission_no,),
+                )
+                connection_to_db.commit()
+                print("voter modification successful")
+            elif has_voted == "no":
+                connection_to_db.execute(
+                    """UPDATE voters SET has_voted=0 WHERE admission_no=?""",
+                    (admission_no,),
+                )
+                connection_to_db.commit()
+                print("voter modification successful")
+            else:
+                raise Exception("invalid input for has_voted")
+    except Exception as e:
+        print("error", e)
+    finally:
+        connection_to_db.close()
+
+
 def _help():
     print(
         "add_party: to add a party to the election",
@@ -116,6 +151,7 @@ def _help():
         "setup_database: to setup database and tables",
         "list_parties: to list all parties in the election",
         "list_voters: to list all voters in the election",
+        "voter_modification: to modify a voter's voting status",
         "help: to get help on commands",
         "exit: to exit the program",
         sep="\n",
@@ -128,6 +164,7 @@ command_function_hashing = {
     "setup_database": databse_setup,
     "list_parties": list_parties,
     "list_voters": list_voters,
+    "voter_modification": voter_modification,
     "help": _help,
 }
 
