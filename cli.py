@@ -1,3 +1,8 @@
+"""
+This is the main file for the voting system.
+It handles the user interface and calls the necessary functions from the index.py file to perform the required operations.
+"""
+
 from index import *
 import sqlite3
 

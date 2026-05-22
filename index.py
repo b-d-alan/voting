@@ -1,5 +1,6 @@
 """
 this file is going to have just the backend logic for voting
+functions like voter verification and vote casting will be implemented here
 """
 
 

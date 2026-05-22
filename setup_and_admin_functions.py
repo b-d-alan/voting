@@ -1,5 +1,6 @@
 """
 setup_wizard to create database, tables and import voters list
+admin functions to add parties, list parties, list voters and modify voters voting status
 """
 
 import sqlite3
