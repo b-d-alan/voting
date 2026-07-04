@@ -8,7 +8,7 @@ import csv
 import os
 
 
-def databse_setup():
+def databse_setup() -> None:
     if "metadata.txt" not in os.listdir():
         database_name = input("enter name for databse creation: ")
         connection_to_db = sqlite3.connect(f"{database_name}.db")
@@ -33,7 +33,7 @@ def databse_setup():
             print("database already exists")
 
 
-def add_party():
+def add_party() -> None:
     connection_to_db = connection_creater()
     party_name = input("enter name of the party to be added: ")
     try:
@@ -79,7 +79,7 @@ def import_data():
         print("error", e)
 
 
-def connection_creater():
+def connection_creater() -> sqlite3.Connection:  # | None
     try:
         with open("metadata.txt", "r") as metadata_file_object:
             metadata = metadata_file_object.read()
@@ -90,7 +90,7 @@ def connection_creater():
         print("error", e)
 
 
-def list_parties():
+def list_parties() -> None:
     connection_to_db = connection_creater()
     try:
         cursor = connection_to_db.execute("""SELECT * FROM votes""")
@@ -101,7 +101,7 @@ def list_parties():
         print("error", e)
 
 
-def list_voters():
+def list_voters() -> None:
     connection_to_db = connection_creater()
     cursor = connection_to_db.execute("""SELECT * FROM voters""")
     voters = cursor.fetchall()
@@ -110,7 +110,7 @@ def list_voters():
     connection_to_db.close()
 
 
-def voter_modification():
+def voter_modification() -> None:
     connection_to_db = connection_creater()
     admission_no = input("enter the admission number of the voter to be modified: ")
     try:
@@ -145,7 +145,7 @@ def voter_modification():
         connection_to_db.close()
 
 
-def _help():
+def _help() -> None:
     print(
         "add_party: to add a party to the election",
         "import_data: to import voters data from a csv file",
