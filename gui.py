@@ -4,6 +4,7 @@ import index
 from PIL import Image  # pillow
 import winsound
 
+# --------------------------------------------------------------------------------------------------
 window = ctk.CTk()
 window.title("ELECTION")
 window.geometry("1600x600")
@@ -11,13 +12,28 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 window.iconbitmap(r"assets\icon.ico")
 # window.attributes("-fullscreen", True)
-
-party_img = ctk.CTkImage(
+# --------------------------------------------------------------------------------------------------
+party_img1 = ctk.CTkImage(
     light_image=Image.open(r"assets\party_logo.png"),
     dark_image=Image.open(r"assets\party_logo.png"),
     size=(150, 150),
 )
-
+party_img2 = ctk.CTkImage(
+    light_image=Image.open(r"assets\party_logo.png"),
+    dark_image=Image.open(r"assets\party_logo.png"),
+    size=(150, 150),
+)
+party_img3 = ctk.CTkImage(
+    light_image=Image.open(r"assets\party_logo.png"),
+    dark_image=Image.open(r"assets\party_logo.png"),
+    size=(150, 150),
+)
+party_img4 = ctk.CTkImage(
+    light_image=Image.open(r"assets\party_logo.png"),
+    dark_image=Image.open(r"assets\party_logo.png"),
+    size=(150, 150),
+)
+# --------------------------------------------------------------------------------------------------
 voting_frame = ctk.CTkFrame(window)
 voting_frame.columnconfigure(0, weight=1)
 voting_frame.columnconfigure(1, weight=1)
@@ -25,19 +41,24 @@ voting_frame.columnconfigure(2, weight=1)
 voting_frame.columnconfigure(3, weight=1)
 
 success_screen = ctk.CTkFrame(window)
+tick_label = ctk.CTkLabel(
+    success_screen, text="✔", font=("Segoe UI", 200, "bold"), text_color="green"
+)
+tick_label.pack()
 success_label = ctk.CTkLabel(
     success_screen, text="Vote Cast Successfully", font=("Arial", 20, "bold")
 )
-success_label.pack(expand=True)
+success_label.pack(pady=(10, 0))
 
-party_img_label1 = ctk.CTkLabel(voting_frame, text="", image=party_img)
-party_img_label2 = ctk.CTkLabel(voting_frame, text="", image=party_img)
-party_img_label3 = ctk.CTkLabel(voting_frame, text="", image=party_img)
-party_img_label4 = ctk.CTkLabel(voting_frame, text="", image=party_img)
+party_img_label1 = ctk.CTkLabel(voting_frame, text="", image=party_img1)
+party_img_label2 = ctk.CTkLabel(voting_frame, text="", image=party_img2)
+party_img_label3 = ctk.CTkLabel(voting_frame, text="", image=party_img3)
+party_img_label4 = ctk.CTkLabel(voting_frame, text="", image=party_img4)
 
 
+# --------------------------------------------------------------------------------------------------
 def vote_handler(party_name):
-    diable_buttons()
+    disable_buttons()
     success, error = index.cast_vote(party_name)
     if success:
         play_success_sound()
@@ -63,7 +84,7 @@ def play_success_sound():
     )
 
 
-def diable_buttons():
+def disable_buttons():
     button_1.configure(state="disabled")
     button_2.configure(state="disabled")
     button_3.configure(state="disabled")
@@ -77,6 +98,7 @@ def enable_buttons():
     button_4.configure(state="normal")
 
 
+# --------------------------------------------------------------------------------------------------
 button_1 = ctk.CTkButton(
     master=voting_frame,
     text="Vote for party 1",
@@ -112,7 +134,7 @@ button_4 = ctk.CTkButton(
     corner_radius=20,
     command=lambda: vote_handler("party4"),
 )
-
+# --------------------------------------------------------------------------------------------------
 button_1.grid(row=1, column=0, padx=60, sticky="ew")
 button_2.grid(row=1, column=1, padx=60, sticky="ew")
 button_3.grid(row=1, column=2, padx=60, sticky="ew")
