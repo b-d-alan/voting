@@ -41,13 +41,31 @@ voting_frame.columnconfigure(2, weight=1)
 voting_frame.columnconfigure(3, weight=1)
 
 success_screen = ctk.CTkFrame(window)
+
+content_frame = ctk.CTkFrame(
+    success_screen,
+    width=500,
+    height=400,
+    fg_color="transparent",
+)
+content_frame.pack(expand=True)
+content_frame.pack_propagate(False)
+
 tick_label = ctk.CTkLabel(
-    success_screen, text="✔", font=("Segoe UI", 200, "bold"), text_color="green"
+    content_frame,
+    text="✔",
+    font=("Segoe UI", 250, "bold"),
+    text_color="green",
 )
+
 tick_label.pack()
+
 success_label = ctk.CTkLabel(
-    success_screen, text="Vote Cast Successfully", font=("Arial", 20, "bold")
+    content_frame,
+    text="Vote Cast Successfully",
+    font=("Arial", 20, "bold"),
 )
+
 success_label.pack(pady=(10, 0))
 
 party_img_label1 = ctk.CTkLabel(voting_frame, text="", image=party_img1)
@@ -64,7 +82,9 @@ def vote_handler(party_name):
         play_success_sound()
         voting_frame.pack_forget()
         success_screen.pack(fill="both", expand=True)
-        window.after(5000, show_voting_screen)
+        tick_label.configure(font=("Segoe UI", 5, "bold"))
+        animate_tick(5)
+        window.after(10000, show_voting_screen)
     else:
         error_label = ctk.CTkLabel(
             window, text=f"Error: {error}", font=("Arial", 20, "bold"), text_color="red"
@@ -96,6 +116,33 @@ def enable_buttons():
     button_2.configure(state="normal")
     button_3.configure(state="normal")
     button_4.configure(state="normal")
+
+
+def animate_tick(size):
+    if size <= 210:
+        tick_label.configure(font=("Segoe UI", size, "bold"))
+        success_screen.after(8, lambda: animate_tick(size + 6))
+
+    elif size <= 235:
+        tick_label.configure(font=("Segoe UI", size, "bold"))
+        success_screen.after(10, lambda: animate_tick(size + 3))
+
+    elif size <= 250:
+        tick_label.configure(font=("Segoe UI", size, "bold"))
+        success_screen.after(15, lambda: animate_tick(size + 1))
+
+    elif size <= 265:
+        tick_label.configure(font=("Segoe UI", size, "bold"))
+        success_screen.after(15, lambda: animate_tick(size + 1))
+
+    elif size > 265:
+        settle_tick(265)
+
+
+def settle_tick(size):
+    if size > 250:
+        tick_label.configure(font=("Segoe UI", size, "bold"))
+        success_screen.after(15, lambda: settle_tick(size - 2))
 
 
 # --------------------------------------------------------------------------------------------------
