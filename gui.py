@@ -98,7 +98,7 @@ school_logo_label = ctk.CTkLabel(
 )
 title_label = ctk.CTkLabel(
     window,
-    text="Student Council Election 2026",
+    text=title_text,
     font=title_font,
     text_color=brand_purple,
 )
@@ -117,6 +117,56 @@ success_label = ctk.CTkLabel(
 )
 
 success_label.pack(pady=(10, 0))
+
+party_name_label_1 = ctk.CTkLabel(
+    voting_frame,
+    text=party_1_name,
+    font=heading_font,
+    text_color=light_text_color,
+)
+party_name_label_2 = ctk.CTkLabel(
+    voting_frame,
+    text=party_2_name,
+    font=heading_font,
+    text_color=light_text_color,
+)
+party_name_label_3 = ctk.CTkLabel(
+    voting_frame,
+    text=party_3_name,
+    font=heading_font,
+    text_color=light_text_color,
+)
+party_name_label_4 = ctk.CTkLabel(
+    voting_frame,
+    text=party_4_name,
+    font=heading_font,
+    text_color=light_text_color,
+)
+
+party_slogan_label_1 = ctk.CTkLabel(
+    voting_frame,
+    text=party_1_slogan,
+    font=subheading_font,
+    text_color=light_secondary_text_color,
+)
+party_slogan_label_2 = ctk.CTkLabel(
+    voting_frame,
+    text=party_2_slogan,
+    font=subheading_font,
+    text_color=light_secondary_text_color,
+)
+party_slogan_label_3 = ctk.CTkLabel(
+    voting_frame,
+    text=party_3_slogan,
+    font=subheading_font,
+    text_color=light_secondary_text_color,
+)
+party_slogan_label_4 = ctk.CTkLabel(
+    voting_frame,
+    text=party_4_slogan,
+    font=subheading_font,
+    text_color=light_secondary_text_color,
+)
 
 party_img_label1 = ctk.CTkLabel(voting_frame, text="", image=party_img1)
 party_img_label2 = ctk.CTkLabel(voting_frame, text="", image=party_img2)
@@ -253,14 +303,22 @@ def play_tick_animation(frame=0):
 # --------------------------------------------------------------------------------------------------
 # Widget layout
 # --------------------------------------------------------------------------------------------------
-button_1.grid(row=1, column=0, padx=60, sticky="ew")
-button_2.grid(row=1, column=1, padx=60, sticky="ew")
-button_3.grid(row=1, column=2, padx=60, sticky="ew")
-button_4.grid(row=1, column=3, padx=60, sticky="ew")
-party_img_label1.grid(row=0, column=0, pady=20)
-party_img_label2.grid(row=0, column=1, pady=20)
-party_img_label3.grid(row=0, column=2, pady=20)
-party_img_label4.grid(row=0, column=3, pady=20)
+party_img_label1.grid(row=0, column=0, pady=(12, 7))
+party_img_label2.grid(row=0, column=1, pady=(12, 7))
+party_img_label3.grid(row=0, column=2, pady=(12, 7))
+party_img_label4.grid(row=0, column=3, pady=(12, 7))
+party_name_label_1.grid(row=1, column=0, pady=(0, 4))
+party_name_label_2.grid(row=1, column=1, pady=(0, 4))
+party_name_label_3.grid(row=1, column=2, pady=(0, 4))
+party_name_label_4.grid(row=1, column=3, pady=(0, 4))
+party_slogan_label_1.grid(row=2, column=0, pady=(0, 10))
+party_slogan_label_2.grid(row=2, column=1, pady=(0, 10))
+party_slogan_label_3.grid(row=2, column=2, pady=(0, 10))
+party_slogan_label_4.grid(row=2, column=3, pady=(0, 10))
+button_1.grid(row=4, column=0, padx=60, sticky="ew")
+button_2.grid(row=4, column=1, padx=60, sticky="ew")
+button_3.grid(row=4, column=2, padx=60, sticky="ew")
+button_4.grid(row=4, column=3, padx=60, sticky="ew")
 
 # --------------------------------------------------------------------------------------------------
 # Application startup

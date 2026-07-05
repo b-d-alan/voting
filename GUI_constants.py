@@ -25,8 +25,8 @@ minimum_window_height = 700
 font_family = "Segoe UI"
 
 title_font = (font_family, 32, "bold")
-heading_font = (font_family, 24, "bold")
-subheading_font = (font_family, 18, "bold")
+heading_font = (font_family, 29, "bold")
+subheading_font = (font_family, 23, "bold")
 body_font = (font_family, 15)
 small_font = (font_family, 13)
 
@@ -169,7 +169,19 @@ success_sound_path = r"assets\success.wav"
 
 vote_success_text = "Vote recorded successfully"
 
+title_text = "Mock Election 2026"
+
 party_1_button_text = "Vote"
 party_2_button_text = "Vote"
 party_3_button_text = "Vote"
 party_4_button_text = "Vote"
+
+party_1_name = "Party One"
+party_2_name = "Party Two"
+party_3_name = "Party Three"
+party_4_name = "Party Four"
+
+party_1_slogan = "Slogan 1"
+party_2_slogan = "Slogan 2"
+party_3_slogan = "Slogan 3"
+party_4_slogan = "Slogan 4"
