@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 *.db
+*.txt
 .vscode/
 sample_student_data.csv
 testdb
