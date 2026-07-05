@@ -37,6 +37,7 @@ party_img_label4 = ctk.CTkLabel(voting_frame, text="", image=party_img)
 
 
 def vote_handler(party_name):
+    diable_buttons()
     success, error = index.cast_vote(party_name)
     if success:
         play_success_sound()
@@ -52,6 +53,7 @@ def vote_handler(party_name):
 
 def show_voting_screen():
     success_screen.pack_forget()
+    enable_buttons()
     voting_frame.pack(fill="x", padx=30, pady=400)
 
 
@@ -59,6 +61,20 @@ def play_success_sound():
     winsound.PlaySound(
         r"assets\success.wav", winsound.SND_FILENAME | winsound.SND_ASYNC
     )
+
+
+def diable_buttons():
+    button_1.configure(state="disabled")
+    button_2.configure(state="disabled")
+    button_3.configure(state="disabled")
+    button_4.configure(state="disabled")
+
+
+def enable_buttons():
+    button_1.configure(state="normal")
+    button_2.configure(state="normal")
+    button_3.configure(state="normal")
+    button_4.configure(state="normal")
 
 
 button_1 = ctk.CTkButton(
