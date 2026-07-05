@@ -5,3 +5,4 @@ __pycache__/
 .vscode/
 sample_student_data.csv
 testdb
+code_snipets_testing.py

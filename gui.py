@@ -33,6 +33,27 @@ party_img4 = ctk.CTkImage(
     dark_image=Image.open(r"assets\party_logo.png"),
     size=(150, 150),
 )
+
+frames = []
+frame_delays = []
+
+img = Image.open(r"assets\success_checkmark.png")
+
+for i in range(img.n_frames):
+    img.seek(i)
+
+    delay = img.info.get("duration", 33)
+
+    frames.append(
+        ctk.CTkImage(
+            light_image=img.copy(),
+            dark_image=img.copy(),
+            size=(220, 220),
+        )
+    )
+
+    frame_delays.append(delay)
+print(frame_delays)
 # --------------------------------------------------------------------------------------------------
 voting_frame = ctk.CTkFrame(window)
 voting_frame.columnconfigure(0, weight=1)
@@ -53,11 +74,10 @@ content_frame.pack_propagate(False)
 
 tick_label = ctk.CTkLabel(
     content_frame,
-    text="✔",
-    font=("Segoe UI", 250, "bold"),
-    text_color="green",
+    text="",
+    image=frames[0],
 )
-
+tick_label.frames = frames
 tick_label.pack()
 
 success_label = ctk.CTkLabel(
@@ -82,8 +102,8 @@ def vote_handler(party_name):
         play_success_sound()
         voting_frame.pack_forget()
         success_screen.pack(fill="both", expand=True)
-        tick_label.configure(font=("Segoe UI", 10, "bold"))
-        animate_tick(10)
+        tick_label.configure(image=frames[0])
+        play_tick_animation()
         window.after(10000, show_voting_screen)
     else:
         error_label = ctk.CTkLabel(
@@ -118,17 +138,15 @@ def enable_buttons():
     button_4.configure(state="normal")
 
 
-def animate_tick(size):
-    if size < 250:
-        tick_label.configure(font=("Segoe UI", size, "bold"))
-        success_screen.after(16, lambda: animate_tick(size + 20))
-    else:
-        tick_label.configure(font=("Segoe UI", 265, "bold"))
-        success_screen.after(60, lambda: settle_tick())
+def play_tick_animation(frame=0):
+    tick_label.configure(image=frames[frame])
 
-
-def settle_tick():
-    tick_label.configure(font=("Segoe UI", 250, "bold"))
+    if frame < len(frames) - 1:
+        delay = int(frame_delays[frame])
+        success_screen.after(
+            delay,
+            lambda: play_tick_animation(frame + 1),
+        )
 
 
 # --------------------------------------------------------------------------------------------------
