@@ -3,17 +3,21 @@ this file is going to have just the backend logic for voting
 functions like voter verification and vote casting will be implemented here
 """
 
+import sqlite3
 
-def cast_vote(connection_to_votesdb, party_name):
+
+def cast_vote(db_name, party_name):
+    print(db_name, party_name)
     try:
-        cursor = connection_to_votesdb.execute(
+        connection_to_db = sqlite3.connect(db_name)
+        cursor = connection_to_db.execute(
             """UPDATE votes SET votes= votes+1 WHERE party_name=?""", (party_name,)
         )
-
+        print(db_name, party_name)
         if cursor.rowcount == 0:
             raise Exception("party not found")
         else:
-            connection_to_votesdb.commit()
+            connection_to_db.commit()
             return True, None
     except Exception as e:
         return False, e
