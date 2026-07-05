@@ -50,7 +50,7 @@ def vote_handler(party_name):
 
 def show_voting_screen():
     success_screen.pack_forget()
-    voting_frame.pack(fill="x", padx=20, pady=100)
+    voting_frame.pack(fill="x", padx=30, pady=400)
 
 
 button_1 = ctk.CTkButton(
@@ -89,10 +89,10 @@ button_4 = ctk.CTkButton(
     command=lambda: vote_handler("party4"),
 )
 
-button_1.grid(row=1, column=0, padx=50, sticky="ew")
-button_2.grid(row=1, column=1, padx=50, sticky="ew")
-button_3.grid(row=1, column=2, padx=50, sticky="ew")
-button_4.grid(row=1, column=3, padx=50, sticky="ew")
+button_1.grid(row=1, column=0, padx=60, sticky="ew")
+button_2.grid(row=1, column=1, padx=60, sticky="ew")
+button_3.grid(row=1, column=2, padx=60, sticky="ew")
+button_4.grid(row=1, column=3, padx=60, sticky="ew")
 party_img_label1.grid(row=0, column=0, pady=20)
 party_img_label2.grid(row=0, column=1, pady=20)
 party_img_label3.grid(row=0, column=2, pady=20)
