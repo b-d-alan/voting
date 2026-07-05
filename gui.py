@@ -26,6 +26,11 @@ window.iconbitmap(icon_path)
 # --------------------------------------------------------------------------------------------------
 # Assets
 # --------------------------------------------------------------------------------------------------
+school_logo = ctk.CTkImage(
+    light_image=Image.open(school_logo_path),
+    dark_image=Image.open(school_logo_path),
+    size=school_logo_size,
+)
 party_img1 = ctk.CTkImage(
     light_image=Image.open(party_logo_path),
     dark_image=Image.open(party_logo_path),
@@ -85,6 +90,18 @@ content_frame.pack(expand=True)
 content_frame.pack_propagate(False)
 
 # labels
+school_logo_label = ctk.CTkLabel(
+    window,
+    image=school_logo,
+    text="",
+    fg_color=transparent,
+)
+title_label = ctk.CTkLabel(
+    window,
+    text="Student Council Election 2026",
+    font=title_font,
+    text_color=purple,
+)
 tick_label = ctk.CTkLabel(
     content_frame,
     text="",
@@ -189,6 +206,10 @@ def vote_handler(party_name):
 
 def show_voting_screen():
     success_screen_frame.pack_forget()
+    school_logo_label.pack(
+        pady=(spacing_lg, spacing_md),
+    )
+    title_label.pack()
     enable_buttons()
     voting_frame.pack(
         fill="x",
