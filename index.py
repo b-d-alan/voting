@@ -7,12 +7,13 @@ functions like voter verification and vote casting will be implemented here
 def cast_vote(connection_to_votesdb, party_name):
     try:
         cursor = connection_to_votesdb.execute(
-            """UPDATE votes SET votes= votes+1 WHERE party_name=?""",
-            (party_name,),
+            """UPDATE votes SET votes= votes+1 WHERE party_name=?""", (party_name,)
         )
+
         if cursor.rowcount == 0:
             raise Exception("party not found")
         else:
+            connection_to_votesdb.commit()
             return True, None
     except Exception as e:
         return False, e
