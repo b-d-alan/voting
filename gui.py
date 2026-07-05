@@ -13,12 +13,12 @@ window.title("ELECTION")
 window.geometry("1600x600")
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
-window.iconbitmap("icon.ico")
+window.iconbitmap(r"assets\icon.ico")
 
 party_img = ctk.CTkImage(
-    light_image=Image.open(r"party_logo.png"),
-    dark_image=Image.open(r"party_logo.png"),
-    size=(100, 100),
+    light_image=Image.open(r"assets\party_logo.png"),
+    dark_image=Image.open(r"assets\party_logo.png"),
+    size=(150, 150),
 )
 
 button_frame = ctk.CTkFrame(window)
