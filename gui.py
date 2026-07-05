@@ -9,6 +9,7 @@ window.geometry("1600x600")
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 window.iconbitmap(r"assets\icon.ico")
+# window.attributes("-fullscreen", True)
 
 party_img = ctk.CTkImage(
     light_image=Image.open(r"assets\party_logo.png"),
@@ -16,26 +17,44 @@ party_img = ctk.CTkImage(
     size=(150, 150),
 )
 
-button_frame = ctk.CTkFrame(window)
-button_frame.columnconfigure(0, weight=1)
-button_frame.columnconfigure(1, weight=1)
-button_frame.columnconfigure(2, weight=1)
-button_frame.columnconfigure(3, weight=1)
+voting_frame = ctk.CTkFrame(window)
+voting_frame.columnconfigure(0, weight=1)
+voting_frame.columnconfigure(1, weight=1)
+voting_frame.columnconfigure(2, weight=1)
+voting_frame.columnconfigure(3, weight=1)
 
-party_img_label1 = ctk.CTkLabel(button_frame, text="", image=party_img)
-party_img_label2 = ctk.CTkLabel(button_frame, text="", image=party_img)
-party_img_label3 = ctk.CTkLabel(button_frame, text="", image=party_img)
-party_img_label4 = ctk.CTkLabel(button_frame, text="", image=party_img)
+success_screen = ctk.CTkFrame(window)
+success_label = ctk.CTkLabel(
+    success_screen, text="Vote Cast Successfully", font=("Arial", 20, "bold")
+)
+success_label.pack(expand=True)
+
+party_img_label1 = ctk.CTkLabel(voting_frame, text="", image=party_img)
+party_img_label2 = ctk.CTkLabel(voting_frame, text="", image=party_img)
+party_img_label3 = ctk.CTkLabel(voting_frame, text="", image=party_img)
+party_img_label4 = ctk.CTkLabel(voting_frame, text="", image=party_img)
 
 
 def vote_handler(party_name):
     success, error = index.cast_vote(party_name)
     if success:
-        button_frame.pack_forget()
+        voting_frame.pack_forget()
+        success_screen.pack(fill="both", expand=True)
+        window.after(3000, show_voting_screen)
+    else:
+        error_label = ctk.CTkLabel(
+            window, text=f"Error: {error}", font=("Arial", 20, "bold"), text_color="red"
+        )
+        error_label.pack(pady=20)
+
+
+def show_voting_screen():
+    success_screen.pack_forget()
+    voting_frame.pack(fill="x", padx=20, pady=100)
 
 
 button_1 = ctk.CTkButton(
-    master=button_frame,
+    master=voting_frame,
     text="Vote for party 1",
     font=("Arial", 20, "bold"),
     height=40,
@@ -44,7 +63,7 @@ button_1 = ctk.CTkButton(
 )
 
 button_2 = ctk.CTkButton(
-    master=button_frame,
+    master=voting_frame,
     text="Vote for party 2",
     font=("Arial", 20, "bold"),
     height=40,
@@ -53,7 +72,7 @@ button_2 = ctk.CTkButton(
 )
 
 button_3 = ctk.CTkButton(
-    master=button_frame,
+    master=voting_frame,
     text="Vote for party 3",
     font=("Arial", 20, "bold"),
     height=40,
@@ -62,7 +81,7 @@ button_3 = ctk.CTkButton(
 )
 
 button_4 = ctk.CTkButton(
-    master=button_frame,
+    master=voting_frame,
     text="Vote for party 4",
     font=("Arial", 20, "bold"),
     height=40,
@@ -78,5 +97,5 @@ party_img_label1.grid(row=0, column=0, pady=20)
 party_img_label2.grid(row=0, column=1, pady=20)
 party_img_label3.grid(row=0, column=2, pady=20)
 party_img_label4.grid(row=0, column=3, pady=20)
-button_frame.pack(fill="x", padx=20, pady=100)
+show_voting_screen()
 window.mainloop()
