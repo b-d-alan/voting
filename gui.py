@@ -77,7 +77,7 @@ content_frame = ctk.CTkFrame(
     success_screen_frame,
     width=content_frame_width,
     height=content_frame_height,
-    fg_color=transparent,
+    fg_color=transparent_color,
 )
 
 # frame configs
@@ -94,13 +94,13 @@ school_logo_label = ctk.CTkLabel(
     window,
     image=school_logo,
     text="",
-    fg_color=transparent,
+    fg_color=transparent_color,
 )
 title_label = ctk.CTkLabel(
     window,
     text="Student Council Election 2026",
     font=title_font,
-    text_color=purple,
+    text_color=brand_purple,
 )
 tick_label = ctk.CTkLabel(
     content_frame,
@@ -112,7 +112,7 @@ tick_label.pack()
 
 success_label = ctk.CTkLabel(
     content_frame,
-    text=vote_success_message,
+    text=vote_success_text,
     font=heading_font,
 )
 
@@ -130,9 +130,9 @@ button_1 = ctk.CTkButton(
     font=heading_font,
     width=button_width,
     height=button_height,
-    corner_radius=button_radius,
-    fg_color=primary_button,
-    hover_color=primary_button_hover,
+    corner_radius=button_corner_radius,
+    fg_color=primary_button_color,
+    hover_color=primary_button_hover_color,
     text_color="white",
     border_width=0,
     command=lambda: vote_handler("party1"),
@@ -144,9 +144,9 @@ button_2 = ctk.CTkButton(
     font=heading_font,
     width=button_width,
     height=button_height,
-    corner_radius=button_radius,
-    fg_color=primary_button,
-    hover_color=primary_button_hover,
+    corner_radius=button_corner_radius,
+    fg_color=primary_button_color,
+    hover_color=primary_button_hover_color,
     text_color="white",
     border_width=0,
     command=lambda: vote_handler("party2"),
@@ -158,9 +158,9 @@ button_3 = ctk.CTkButton(
     font=heading_font,
     width=button_width,
     height=button_height,
-    corner_radius=button_radius,
-    fg_color=primary_button,
-    hover_color=primary_button_hover,
+    corner_radius=button_corner_radius,
+    fg_color=primary_button_color,
+    hover_color=primary_button_hover_color,
     text_color="white",
     border_width=0,
     command=lambda: vote_handler("party3"),
@@ -172,9 +172,9 @@ button_4 = ctk.CTkButton(
     font=heading_font,
     width=button_width,
     height=button_height,
-    corner_radius=button_radius,
-    fg_color=primary_button,
-    hover_color=primary_button_hover,
+    corner_radius=button_corner_radius,
+    fg_color=primary_button_color,
+    hover_color=primary_button_hover_color,
     text_color="white",
     border_width=0,
     command=lambda: vote_handler("party4"),
@@ -199,7 +199,7 @@ def vote_handler(party_name):
             window,
             text=f"Error: {error_from_fun_call}",
             font=heading_font,
-            text_color=error,
+            text_color=error_color,
         )
         error_label.pack(pady=20)
 
@@ -207,7 +207,7 @@ def vote_handler(party_name):
 def show_voting_screen():
     success_screen_frame.pack_forget()
     school_logo_label.pack(
-        pady=(spacing_lg, spacing_md),
+        pady=(spacing_24, spacing_16),
     )
     title_label.pack()
     enable_buttons()
