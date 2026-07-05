@@ -2,6 +2,7 @@ import customtkinter as ctk
 import tkinter as tk
 import index
 from PIL import Image  # pillow
+import winsound
 
 window = ctk.CTk()
 window.title("ELECTION")
@@ -38,9 +39,10 @@ party_img_label4 = ctk.CTkLabel(voting_frame, text="", image=party_img)
 def vote_handler(party_name):
     success, error = index.cast_vote(party_name)
     if success:
+        play_success_sound()
         voting_frame.pack_forget()
         success_screen.pack(fill="both", expand=True)
-        window.after(3000, show_voting_screen)
+        window.after(5000, show_voting_screen)
     else:
         error_label = ctk.CTkLabel(
             window, text=f"Error: {error}", font=("Arial", 20, "bold"), text_color="red"
@@ -51,6 +53,12 @@ def vote_handler(party_name):
 def show_voting_screen():
     success_screen.pack_forget()
     voting_frame.pack(fill="x", padx=30, pady=400)
+
+
+def play_success_sound():
+    winsound.PlaySound(
+        r"assets\success.wav", winsound.SND_FILENAME | winsound.SND_ASYNC
+    )
 
 
 button_1 = ctk.CTkButton(
