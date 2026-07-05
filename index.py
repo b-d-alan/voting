@@ -6,14 +6,17 @@ functions like voter verification and vote casting will be implemented here
 import sqlite3
 
 
-def cast_vote(db_name, party_name):
-    print(db_name, party_name)
+def cast_vote(party_name):
+    with open("metadata.txt", "r") as metadata_fileobject:
+        metadata = metadata_fileobject.read()
+        db_name = metadata.split(":")[1].strip()
+    print("cast_vote called", db_name, party_name)
     try:
         connection_to_db = sqlite3.connect(db_name)
         cursor = connection_to_db.execute(
             """UPDATE votes SET votes= votes+1 WHERE party_name=?""", (party_name,)
         )
-        print(db_name, party_name)
+        print("query complete", db_name, party_name)
         if cursor.rowcount == 0:
             raise Exception("party not found")
         else:

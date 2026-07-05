@@ -1,12 +1,7 @@
 import customtkinter as ctk
 import tkinter as tk
 import index
-from PIL import Image
-
-with open("metadata.txt", "r") as metadata_fileobject:
-    metadata = metadata_fileobject.read()
-    db_name = metadata.split(":")[1].strip()
-
+from PIL import Image  # pillow
 
 window = ctk.CTk()
 window.title("ELECTION")
@@ -33,13 +28,19 @@ party_img_label3 = ctk.CTkLabel(button_frame, text="", image=party_img)
 party_img_label4 = ctk.CTkLabel(button_frame, text="", image=party_img)
 
 
+def vote_handler(party_name):
+    success, error = index.cast_vote(party_name)
+    if success:
+        button_frame.pack_forget()
+
+
 button_1 = ctk.CTkButton(
     master=button_frame,
     text="Vote for party 1",
     font=("Arial", 20, "bold"),
     height=40,
     corner_radius=20,
-    command=lambda: index.cast_vote(db_name, "party1"),
+    command=lambda: vote_handler("party1"),
 )
 
 button_2 = ctk.CTkButton(
@@ -48,7 +49,7 @@ button_2 = ctk.CTkButton(
     font=("Arial", 20, "bold"),
     height=40,
     corner_radius=20,
-    command=lambda: index.cast_vote(db_name, "party2"),
+    command=lambda: vote_handler("party2"),
 )
 
 button_3 = ctk.CTkButton(
@@ -57,7 +58,7 @@ button_3 = ctk.CTkButton(
     font=("Arial", 20, "bold"),
     height=40,
     corner_radius=20,
-    command=lambda: index.cast_vote(db_name, "party3"),
+    command=lambda: vote_handler("party3"),
 )
 
 button_4 = ctk.CTkButton(
@@ -66,7 +67,7 @@ button_4 = ctk.CTkButton(
     font=("Arial", 20, "bold"),
     height=40,
     corner_radius=20,
-    command=lambda: index.cast_vote(db_name, "party4"),
+    command=lambda: vote_handler("party4"),
 )
 
 button_1.grid(row=1, column=0, padx=50, sticky="ew")

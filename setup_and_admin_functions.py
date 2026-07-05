@@ -145,6 +145,31 @@ def voter_modification() -> None:
         connection_to_db.close()
 
 
+def party_modification():
+    connection_to_db = connection_creater()
+    party_name = input("enter the name of the party to be modified: ")
+    try:
+        cursor = connection_to_db.execute(
+            """SELECT * FROM votes WHERE party_name=?""",
+            (party_name,),
+        )
+        party = cursor.fetchone()
+        if party is None:
+            raise Exception("party not found")
+        else:
+            vote_count = int(input("enter the new vote count for the party: "))
+            connection_to_db.execute(
+                """UPDATE votes SET votes=? WHERE party_name=?""",
+                (vote_count, party_name),
+            )
+            connection_to_db.commit()
+            print("party modification successful")
+    except Exception as e:
+        print("error", e)
+    finally:
+        connection_to_db.close()
+
+
 def _help() -> None:
     print(
         "add_party: to add a party to the election",
@@ -153,6 +178,7 @@ def _help() -> None:
         "list_parties: to list all parties in the election",
         "list_voters: to list all voters in the election",
         "voter_modification: to modify a voter's voting status",
+        "party_modification: to modify a party's vote count",
         "help: to get help on commands",
         "exit: to exit the program",
         sep="\n",
@@ -166,6 +192,7 @@ command_function_hashing = {
     "list_parties": list_parties,
     "list_voters": list_voters,
     "voter_modification": voter_modification,
+    "party_modification": party_modification,
     "help": _help,
 }
 
