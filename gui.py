@@ -6,16 +6,17 @@ import tkinter as tk
 import index
 from PIL import Image  # pillow
 import winsound
+from GUI_constants import *
 
 # --------------------------------------------------------------------------------------------------
 # Window creation and config
 # --------------------------------------------------------------------------------------------------
 window = ctk.CTk()
-window.title("ELECTION")
-window.geometry("1600x600")
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("blue")
-window.iconbitmap(r"assets\icon.ico")
+window.title(window_title)
+window.geometry(window_size)
+ctk.set_appearance_mode(appearance_mode)
+ctk.set_default_color_theme(color_theme)
+window.iconbitmap(icon_path)
 # window.attributes("-fullscreen", True)
 
 # --------------------------------------------------------------------------------------------------
@@ -26,37 +27,37 @@ window.iconbitmap(r"assets\icon.ico")
 # Assets
 # --------------------------------------------------------------------------------------------------
 party_img1 = ctk.CTkImage(
-    light_image=Image.open(r"assets\party_logo.png"),
-    dark_image=Image.open(r"assets\party_logo.png"),
-    size=(150, 150),
+    light_image=Image.open(party_logo_path),
+    dark_image=Image.open(party_logo_path),
+    size=party_logo_size,
 )
 party_img2 = ctk.CTkImage(
-    light_image=Image.open(r"assets\party_logo.png"),
-    dark_image=Image.open(r"assets\party_logo.png"),
-    size=(150, 150),
+    light_image=Image.open(party_logo_path),
+    dark_image=Image.open(party_logo_path),
+    size=party_logo_size,
 )
 party_img3 = ctk.CTkImage(
-    light_image=Image.open(r"assets\party_logo.png"),
-    dark_image=Image.open(r"assets\party_logo.png"),
-    size=(150, 150),
+    light_image=Image.open(party_logo_path),
+    dark_image=Image.open(party_logo_path),
+    size=party_logo_size,
 )
 party_img4 = ctk.CTkImage(
-    light_image=Image.open(r"assets\party_logo.png"),
-    dark_image=Image.open(r"assets\party_logo.png"),
-    size=(150, 150),
+    light_image=Image.open(party_logo_path),
+    dark_image=Image.open(party_logo_path),
+    size=party_logo_size,
 )
 
 animation_frames = []
 animation_delays = []
-tick_image = Image.open(r"assets\success_checkmark.png")
+tick_image = Image.open(success_checkmark_path)
 for i in range(tick_image.n_frames):
     tick_image.seek(i)
-    delay = tick_image.info.get("duration", 33)
+    delay = tick_image.info.get("duration", default_animation_delay)
     animation_frames.append(
         ctk.CTkImage(
             light_image=tick_image.copy(),
             dark_image=tick_image.copy(),
-            size=(220, 220),
+            size=tick_animation_size,
         )
     )
     animation_delays.append(delay)
@@ -69,9 +70,9 @@ voting_frame = ctk.CTkFrame(window)
 success_screen_frame = ctk.CTkFrame(window)
 content_frame = ctk.CTkFrame(
     success_screen_frame,
-    width=500,
-    height=400,
-    fg_color="transparent",
+    width=content_frame_width,
+    height=content_frame_height,
+    fg_color=transparent,
 )
 
 # frame configs
@@ -94,8 +95,8 @@ tick_label.pack()
 
 success_label = ctk.CTkLabel(
     content_frame,
-    text="Vote Cast Successfully",
-    font=("Arial", 20, "bold"),
+    text=vote_success_message,
+    font=heading_font,
 )
 
 success_label.pack(pady=(10, 0))
@@ -108,37 +109,57 @@ party_img_label4 = ctk.CTkLabel(voting_frame, text="", image=party_img4)
 # buttons
 button_1 = ctk.CTkButton(
     master=voting_frame,
-    text="Vote for party 1",
-    font=("Arial", 20, "bold"),
-    height=40,
-    corner_radius=20,
+    text=party_1_button_text,
+    font=heading_font,
+    width=button_width,
+    height=button_height,
+    corner_radius=button_radius,
+    fg_color=primary_button,
+    hover_color=primary_button_hover,
+    text_color="white",
+    border_width=0,
     command=lambda: vote_handler("party1"),
 )
 
 button_2 = ctk.CTkButton(
     master=voting_frame,
-    text="Vote for party 2",
-    font=("Arial", 20, "bold"),
-    height=40,
-    corner_radius=20,
+    text=party_2_button_text,
+    font=heading_font,
+    width=button_width,
+    height=button_height,
+    corner_radius=button_radius,
+    fg_color=primary_button,
+    hover_color=primary_button_hover,
+    text_color="white",
+    border_width=0,
     command=lambda: vote_handler("party2"),
 )
 
 button_3 = ctk.CTkButton(
     master=voting_frame,
-    text="Vote for party 3",
-    font=("Arial", 20, "bold"),
-    height=40,
-    corner_radius=20,
+    text=party_3_button_text,
+    font=heading_font,
+    width=button_width,
+    height=button_height,
+    corner_radius=button_radius,
+    fg_color=primary_button,
+    hover_color=primary_button_hover,
+    text_color="white",
+    border_width=0,
     command=lambda: vote_handler("party3"),
 )
 
 button_4 = ctk.CTkButton(
     master=voting_frame,
-    text="Vote for party 4",
-    font=("Arial", 20, "bold"),
-    height=40,
-    corner_radius=20,
+    text=party_4_button_text,
+    font=heading_font,
+    width=button_width,
+    height=button_height,
+    corner_radius=button_radius,
+    fg_color=primary_button,
+    hover_color=primary_button_hover,
+    text_color="white",
+    border_width=0,
     command=lambda: vote_handler("party4"),
 )
 
@@ -148,17 +169,20 @@ button_4 = ctk.CTkButton(
 # --------------------------------------------------------------------------------------------------
 def vote_handler(party_name):
     disable_buttons()
-    success, error = index.cast_vote(party_name)
+    success, error_from_fun_call = index.cast_vote(party_name)
     if success:
         play_success_sound()
         voting_frame.pack_forget()
         success_screen_frame.pack(fill="both", expand=True)
         tick_label.configure(image=animation_frames[0])
         play_tick_animation()
-        window.after(10000, show_voting_screen)
+        window.after(success_screen_duration, show_voting_screen)
     else:
         error_label = ctk.CTkLabel(
-            window, text=f"Error: {error}", font=("Arial", 20, "bold"), text_color="red"
+            window,
+            text=f"Error: {error_from_fun_call}",
+            font=heading_font,
+            text_color=error,
         )
         error_label.pack(pady=20)
 
@@ -166,12 +190,17 @@ def vote_handler(party_name):
 def show_voting_screen():
     success_screen_frame.pack_forget()
     enable_buttons()
-    voting_frame.pack(fill="x", padx=30, pady=400)
+    voting_frame.pack(
+        fill="x",
+        padx=voting_frame_padx,
+        pady=voting_frame_pady,
+    )
 
 
 def play_success_sound():
     winsound.PlaySound(
-        r"assets\success.wav", winsound.SND_FILENAME | winsound.SND_ASYNC
+        success_sound_path,
+        winsound.SND_FILENAME | winsound.SND_ASYNC,
     )
 
 
