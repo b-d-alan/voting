@@ -26,24 +26,31 @@ window.iconbitmap(icon_path)
 # --------------------------------------------------------------------------------------------------
 # Assets
 # --------------------------------------------------------------------------------------------------
+background_pil = Image.open(background_path)
+
+background_image = ctk.CTkImage(
+    light_image=background_pil,
+    dark_image=background_pil,
+    size=(window_width, window_height),
+)
 school_logo = ctk.CTkImage(
     light_image=Image.open(school_logo_path),
     dark_image=Image.open(school_logo_path),
     size=school_logo_size,
 )
 party_img1 = ctk.CTkImage(
-    light_image=Image.open(party_logo_path),
-    dark_image=Image.open(party_logo_path),
+    light_image=Image.open(party_1_logo_path),
+    dark_image=Image.open(party_1_logo_path),
     size=party_logo_size,
 )
 party_img2 = ctk.CTkImage(
-    light_image=Image.open(party_logo_path),
-    dark_image=Image.open(party_logo_path),
+    light_image=Image.open(party_2_logo_path),
+    dark_image=Image.open(party_2_logo_path),
     size=party_logo_size,
 )
 party_img3 = ctk.CTkImage(
-    light_image=Image.open(party_logo_path),
-    dark_image=Image.open(party_logo_path),
+    light_image=Image.open(party_3_logo_path),
+    dark_image=Image.open(party_3_logo_path),
     size=party_logo_size,
 )
 
@@ -68,10 +75,10 @@ for i in range(tick_image.n_frames):
 # frames
 voting_frame = ctk.CTkFrame(
     window,
-    fg_color="#dbdbdb",  # transparent_color
+    fg_color=transparent_color,  # "#dbdbdb"
     border_width=1,
     border_color=light_border_color,
-    corner_radius=16,
+    corner_radius=25,
 )
 
 success_screen_frame = ctk.CTkFrame(
@@ -94,8 +101,17 @@ content_frame.pack(expand=True)
 content_frame.pack_propagate(False)
 
 # labels
+background_label = ctk.CTkLabel(
+    window,
+    image=background_image,
+    text="",
+)
 school_logo_label = ctk.CTkLabel(
-    window, image=school_logo, text="", fg_color=transparent_color, pady=20
+    window,
+    image=school_logo,
+    text="",
+    fg_color=transparent_color,
+    pady=20,
 )
 title_label = ctk.CTkLabel(
     window,
@@ -253,6 +269,20 @@ def play_tick_animation(frame=0):
         )
 
 
+def update_background(event):
+    if event.widget != window:
+        return
+
+    new_image = ctk.CTkImage(
+        light_image=background_pil,
+        dark_image=background_pil,
+        size=(event.width, event.height),
+    )
+
+    background_label.configure(image=new_image)
+    background_label.image = new_image
+
+
 # --------------------------------------------------------------------------------------------------
 # Widget layout
 # --------------------------------------------------------------------------------------------------
@@ -269,5 +299,14 @@ button_3.grid(row=4, column=2, padx=70, pady=(0, 20), sticky="ew")
 # --------------------------------------------------------------------------------------------------
 # Application startup
 # --------------------------------------------------------------------------------------------------
+background_label.place(
+    x=0,
+    y=0,
+    relwidth=1,
+    relheight=1,
+)
+background_label.lower()
+window.bind("<Configure>", update_background)
+window.configure(fg_color="#EEF0F8")
 show_voting_screen()
 window.mainloop()
