@@ -86,9 +86,9 @@ dark_focus_color = "#8E7EFF"
 # --------------------------------------------------------------------------------------------------
 
 # Buttons
-primary_button_color = brand_green
-primary_button_hover_color = brand_green_hover
-primary_button_pressed_color = brand_green_pressed
+primary_button_color = brand_purple
+primary_button_hover_color = brand_purple_hover
+primary_button_pressed_color = brand_purple_pressed
 
 secondary_button_color = brand_purple_light
 secondary_button_hover_color = "#E3E8FF"
@@ -148,7 +148,7 @@ voting_frame_pady = 200
 
 hover_animation_ms = 150
 default_animation_delay = 33
-success_screen_duration = 10000
+success_screen_duration = 2000
 
 # --------------------------------------------------------------------------------------------------
 # Assets

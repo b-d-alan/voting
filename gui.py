@@ -170,7 +170,7 @@ button_1 = ctk.CTkButton(
     hover_color=primary_button_hover_color,
     text_color="white",
     border_width=0,
-    command=lambda: vote_handler("party1"),
+    command=lambda: vote_handler(party_1_name),
 )
 
 button_2 = ctk.CTkButton(
@@ -184,7 +184,7 @@ button_2 = ctk.CTkButton(
     hover_color=primary_button_hover_color,
     text_color="white",
     border_width=0,
-    command=lambda: vote_handler("party2"),
+    command=lambda: vote_handler(party_2_name),
 )
 
 button_3 = ctk.CTkButton(
@@ -198,7 +198,7 @@ button_3 = ctk.CTkButton(
     hover_color=primary_button_hover_color,
     text_color="white",
     border_width=0,
-    command=lambda: vote_handler("party3"),
+    command=lambda: vote_handler(party_3_name),
 )
 
 
@@ -307,6 +307,6 @@ background_label.place(
 )
 background_label.lower()
 window.bind("<Configure>", update_background)
-window.configure(fg_color="#EEF0F8")
+window.configure(fg_color="#57bad2")  # "#EEF0F8"
 show_voting_screen()
 window.mainloop()
