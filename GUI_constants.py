@@ -24,9 +24,9 @@ minimum_window_height = 700
 
 font_family = "Segoe UI"
 
-title_font = (font_family, 32, "bold")
-heading_font = (font_family, 29, "bold")
-subheading_font = (font_family, 23, "bold")
+title_font = (font_family, 36, "bold")
+heading_font = (font_family, 32, "bold")
+subheading_font = (font_family, 27, "bold")
 body_font = (font_family, 15)
 small_font = (font_family, 13)
 
@@ -120,7 +120,7 @@ entry_corner_radius = 10
 entry_border_width = 1
 
 # Images
-party_logo_size = (150, 150)
+party_logo_size = (200, 200)
 school_logo_size = (562.5, 150)
 tick_animation_size = (220, 220)
 

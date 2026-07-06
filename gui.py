@@ -71,8 +71,18 @@ for i in range(tick_image.n_frames):
 # Widget creation
 # --------------------------------------------------------------------------------------------------
 # frames
-voting_frame = ctk.CTkFrame(window)
-success_screen_frame = ctk.CTkFrame(window)
+voting_frame = ctk.CTkFrame(
+    window,
+    fg_color="#dbdbdb",  # transparent_color
+    border_width=1,
+    border_color=light_border_color,
+    corner_radius=16,
+)
+
+success_screen_frame = ctk.CTkFrame(
+    window,
+    fg_color=transparent_color,
+)
 content_frame = ctk.CTkFrame(
     success_screen_frame,
     width=content_frame_width,
@@ -91,10 +101,7 @@ content_frame.pack_propagate(False)
 
 # labels
 school_logo_label = ctk.CTkLabel(
-    window,
-    image=school_logo,
-    text="",
-    fg_color=transparent_color,
+    window, image=school_logo, text="", fg_color=transparent_color, pady=20
 )
 title_label = ctk.CTkLabel(
     window,
@@ -122,50 +129,50 @@ party_name_label_1 = ctk.CTkLabel(
     voting_frame,
     text=party_1_name,
     font=heading_font,
-    text_color=light_text_color,
+    text_color=brand_purple,
 )
 party_name_label_2 = ctk.CTkLabel(
     voting_frame,
     text=party_2_name,
     font=heading_font,
-    text_color=light_text_color,
+    text_color=brand_purple,
 )
 party_name_label_3 = ctk.CTkLabel(
     voting_frame,
     text=party_3_name,
     font=heading_font,
-    text_color=light_text_color,
+    text_color=brand_purple,
 )
 party_name_label_4 = ctk.CTkLabel(
     voting_frame,
     text=party_4_name,
     font=heading_font,
-    text_color=light_text_color,
+    text_color=brand_purple,
 )
 
 party_slogan_label_1 = ctk.CTkLabel(
     voting_frame,
     text=party_1_slogan,
     font=subheading_font,
-    text_color=light_secondary_text_color,
+    text_color=brand_purple_hover,
 )
 party_slogan_label_2 = ctk.CTkLabel(
     voting_frame,
     text=party_2_slogan,
     font=subheading_font,
-    text_color=light_secondary_text_color,
+    text_color=brand_purple_hover,
 )
 party_slogan_label_3 = ctk.CTkLabel(
     voting_frame,
     text=party_3_slogan,
     font=subheading_font,
-    text_color=light_secondary_text_color,
+    text_color=brand_purple_hover,
 )
 party_slogan_label_4 = ctk.CTkLabel(
     voting_frame,
     text=party_4_slogan,
     font=subheading_font,
-    text_color=light_secondary_text_color,
+    text_color=brand_purple_hover,
 )
 
 party_img_label1 = ctk.CTkLabel(voting_frame, text="", image=party_img1)
@@ -315,10 +322,10 @@ party_slogan_label_1.grid(row=2, column=0, pady=(0, 10))
 party_slogan_label_2.grid(row=2, column=1, pady=(0, 10))
 party_slogan_label_3.grid(row=2, column=2, pady=(0, 10))
 party_slogan_label_4.grid(row=2, column=3, pady=(0, 10))
-button_1.grid(row=4, column=0, padx=60, sticky="ew")
-button_2.grid(row=4, column=1, padx=60, sticky="ew")
-button_3.grid(row=4, column=2, padx=60, sticky="ew")
-button_4.grid(row=4, column=3, padx=60, sticky="ew")
+button_1.grid(row=4, column=0, padx=70, pady=(0, 20), sticky="ew")
+button_2.grid(row=4, column=1, padx=70, pady=(0, 20), sticky="ew")
+button_3.grid(row=4, column=2, padx=70, pady=(0, 20), sticky="ew")
+button_4.grid(row=4, column=3, padx=70, pady=(0, 20), sticky="ew")
 
 # --------------------------------------------------------------------------------------------------
 # Application startup
