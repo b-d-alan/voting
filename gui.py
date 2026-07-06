@@ -46,11 +46,6 @@ party_img3 = ctk.CTkImage(
     dark_image=Image.open(party_logo_path),
     size=party_logo_size,
 )
-party_img4 = ctk.CTkImage(
-    light_image=Image.open(party_logo_path),
-    dark_image=Image.open(party_logo_path),
-    size=party_logo_size,
-)
 
 animation_frames = []
 animation_delays = []
@@ -94,7 +89,6 @@ content_frame = ctk.CTkFrame(
 voting_frame.columnconfigure(0, weight=1)
 voting_frame.columnconfigure(1, weight=1)
 voting_frame.columnconfigure(2, weight=1)
-voting_frame.columnconfigure(3, weight=1)
 
 content_frame.pack(expand=True)
 content_frame.pack_propagate(False)
@@ -143,42 +137,10 @@ party_name_label_3 = ctk.CTkLabel(
     font=heading_font,
     text_color=brand_purple,
 )
-party_name_label_4 = ctk.CTkLabel(
-    voting_frame,
-    text=party_4_name,
-    font=heading_font,
-    text_color=brand_purple,
-)
-
-party_slogan_label_1 = ctk.CTkLabel(
-    voting_frame,
-    text=party_1_slogan,
-    font=subheading_font,
-    text_color=brand_purple_hover,
-)
-party_slogan_label_2 = ctk.CTkLabel(
-    voting_frame,
-    text=party_2_slogan,
-    font=subheading_font,
-    text_color=brand_purple_hover,
-)
-party_slogan_label_3 = ctk.CTkLabel(
-    voting_frame,
-    text=party_3_slogan,
-    font=subheading_font,
-    text_color=brand_purple_hover,
-)
-party_slogan_label_4 = ctk.CTkLabel(
-    voting_frame,
-    text=party_4_slogan,
-    font=subheading_font,
-    text_color=brand_purple_hover,
-)
 
 party_img_label1 = ctk.CTkLabel(voting_frame, text="", image=party_img1)
 party_img_label2 = ctk.CTkLabel(voting_frame, text="", image=party_img2)
 party_img_label3 = ctk.CTkLabel(voting_frame, text="", image=party_img3)
-party_img_label4 = ctk.CTkLabel(voting_frame, text="", image=party_img4)
 
 # buttons
 button_1 = ctk.CTkButton(
@@ -221,20 +183,6 @@ button_3 = ctk.CTkButton(
     text_color="white",
     border_width=0,
     command=lambda: vote_handler("party3"),
-)
-
-button_4 = ctk.CTkButton(
-    master=voting_frame,
-    text=party_4_button_text,
-    font=heading_font,
-    width=button_width,
-    height=button_height,
-    corner_radius=button_corner_radius,
-    fg_color=primary_button_color,
-    hover_color=primary_button_hover_color,
-    text_color="white",
-    border_width=0,
-    command=lambda: vote_handler("party4"),
 )
 
 
@@ -286,14 +234,12 @@ def disable_buttons():
     button_1.configure(state="disabled")
     button_2.configure(state="disabled")
     button_3.configure(state="disabled")
-    button_4.configure(state="disabled")
 
 
 def enable_buttons():
     button_1.configure(state="normal")
     button_2.configure(state="normal")
     button_3.configure(state="normal")
-    button_4.configure(state="normal")
 
 
 def play_tick_animation(frame=0):
@@ -313,19 +259,12 @@ def play_tick_animation(frame=0):
 party_img_label1.grid(row=0, column=0, pady=(12, 7))
 party_img_label2.grid(row=0, column=1, pady=(12, 7))
 party_img_label3.grid(row=0, column=2, pady=(12, 7))
-party_img_label4.grid(row=0, column=3, pady=(12, 7))
 party_name_label_1.grid(row=1, column=0, pady=(0, 4))
 party_name_label_2.grid(row=1, column=1, pady=(0, 4))
 party_name_label_3.grid(row=1, column=2, pady=(0, 4))
-party_name_label_4.grid(row=1, column=3, pady=(0, 4))
-party_slogan_label_1.grid(row=2, column=0, pady=(0, 10))
-party_slogan_label_2.grid(row=2, column=1, pady=(0, 10))
-party_slogan_label_3.grid(row=2, column=2, pady=(0, 10))
-party_slogan_label_4.grid(row=2, column=3, pady=(0, 10))
 button_1.grid(row=4, column=0, padx=70, pady=(0, 20), sticky="ew")
 button_2.grid(row=4, column=1, padx=70, pady=(0, 20), sticky="ew")
 button_3.grid(row=4, column=2, padx=70, pady=(0, 20), sticky="ew")
-button_4.grid(row=4, column=3, padx=70, pady=(0, 20), sticky="ew")
 
 # --------------------------------------------------------------------------------------------------
 # Application startup
